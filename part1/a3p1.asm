@@ -16,7 +16,7 @@ main:
 # $a3: max
 # $t3: hasDup
 ########################################
-			addiu $sp, $sp, -1008
+			addiu $sp, $sp, -308
 			li $t0, 0x756c6156
 			sw $t0, 0($sp)
 			li $t0, 0x73692065
@@ -317,7 +317,7 @@ else7:
 			syscall
 endI7:
 
-			addiu $sp, $sp, 1008
+			addiu $sp, $sp, 308
 			li $v0, 10
 			syscall
 
