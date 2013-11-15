@@ -1,0 +1,116 @@
+
+Input int #1: 1
+Value is odd... add 1 to evenize...
+Enter another? (n or N = no, anything else = yes) n
+1 value(s) entered: 2
+Min is 2
+Max is 2
+No duplicate...
+
+-- program is finished running --
+
+
+Reset: reset completed.
+
+
+Input int #1: 1
+Value is odd... add 1 to evenize...
+Enter another? (n or N = no, anything else = yes) 2
+Input int #2: 2
+Enter another? (n or N = no, anything else = yes) n
+2 value(s) entered: 2  2
+Min is 2
+Max is 2
+Uno o mas duplicates...
+
+-- program is finished running --
+
+
+Reset: reset completed.
+
+
+Input int #1: 1
+Value is odd... add 1 to evenize...
+Enter another? (n or N = no, anything else = yes) 3
+Input int #2: 3
+Value is odd... add 1 to evenize...
+Enter another? (n or N = no, anything else = yes) n
+2 value(s) entered: 2  4
+Min is 2
+Max is 4
+No duplicate...
+
+-- program is finished running --
+
+
+Reset: reset completed.
+
+
+Input int #1: 2
+Enter another? (n or N = no, anything else = yes) 4
+Input int #2: 4
+Enter another? (n or N = no, anything else = yes) 6
+Input int #3: 6
+Enter another? (n or N = no, anything else = yes) n
+3 value(s) entered: 2  4  6
+Min is 2
+Max is 6
+No duplicate...
+
+-- program is finished running --
+
+
+Reset: reset completed.
+
+
+Input int #1: 1
+Value is odd... add 1 to evenize...
+Enter another? (n or N = no, anything else = yes) 4
+Input int #2: 4
+Enter another? (n or N = no, anything else = yes) 3
+Input int #3: 3
+Value is odd... add 1 to evenize...
+Enter another? (n or N = no, anything else = yes) n
+3 value(s) entered: 2  4  4
+Min is 2
+Max is 4
+Uno o mas duplicates...
+
+-- program is finished running --
+
+
+Reset: reset completed.
+
+
+Input int #1: 8
+Enter another? (n or N = no, anything else = yes) 6
+Input int #2: 6
+Enter another? (n or N = no, anything else = yes) 4
+Input int #3: 4
+Enter another? (n or N = no, anything else = yes) 2
+Input int #4: 2
+Enter another? (n or N = no, anything else = yes) 0
+Input int #5: 0
+Enter another? (n or N = no, anything else = yes) 1
+Input int #6: 1
+Value is odd... add 1 to evenize...
+Enter another? (n or N = no, anything else = yes) 3
+Input int #7: 3
+Value is odd... add 1 to evenize...
+Enter another? (n or N = no, anything else = yes) 5
+Input int #8: 5
+Value is odd... add 1 to evenize...
+Enter another? (n or N = no, anything else = yes) 7
+Input int #9: 7
+Value is odd... add 1 to evenize...
+Enter another? (n or N = no, anything else = yes) 9
+Input int #10: 9
+Value is odd... add 1 to evenize...
+Max of 10 values entered...
+
+10 value(s) entered: 8  6  4  2  0  2  4  6  8  10
+Min is 0
+Max is 10
+Uno o mas duplicates...
+
+-- program is finished running --

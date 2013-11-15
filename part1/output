@@ -1,0 +1,81 @@
+MARS 4.2  Copyright 2003-2012 Pete Sanderson and Kenneth Vollmar
+
+
+Input int #1: Value is odd... add 1 to evenize...
+Enter another? (n or N = no, anything else = yes) 
+1 value(s) entered: 2
+Min is 2
+Max is 2
+No duplicate...
+
+MARS 4.2  Copyright 2003-2012 Pete Sanderson and Kenneth Vollmar
+
+
+Input int #1: Value is odd... add 1 to evenize...
+Enter another? (n or N = no, anything else = yes) 
+Input int #2: Enter another? (n or N = no, anything else = yes) 
+2 value(s) entered: 2  2
+Min is 2
+Max is 2
+Uno o mas duplicates...
+
+MARS 4.2  Copyright 2003-2012 Pete Sanderson and Kenneth Vollmar
+
+
+Input int #1: Value is odd... add 1 to evenize...
+Enter another? (n or N = no, anything else = yes) 
+Input int #2: Value is odd... add 1 to evenize...
+Enter another? (n or N = no, anything else = yes) 
+2 value(s) entered: 2  4
+Min is 2
+Max is 4
+No duplicate...
+
+MARS 4.2  Copyright 2003-2012 Pete Sanderson and Kenneth Vollmar
+
+
+Input int #1: Enter another? (n or N = no, anything else = yes) 
+Input int #2: Enter another? (n or N = no, anything else = yes) 
+Input int #3: Enter another? (n or N = no, anything else = yes) 
+3 value(s) entered: 2  4  6
+Min is 2
+Max is 6
+No duplicate...
+
+MARS 4.2  Copyright 2003-2012 Pete Sanderson and Kenneth Vollmar
+
+
+Input int #1: Value is odd... add 1 to evenize...
+Enter another? (n or N = no, anything else = yes) 
+Input int #2: Enter another? (n or N = no, anything else = yes) 
+Input int #3: Value is odd... add 1 to evenize...
+Enter another? (n or N = no, anything else = yes) 
+3 value(s) entered: 2  4  4
+Min is 2
+Max is 4
+Uno o mas duplicates...
+
+MARS 4.2  Copyright 2003-2012 Pete Sanderson and Kenneth Vollmar
+
+
+Input int #1: Enter another? (n or N = no, anything else = yes) 
+Input int #2: Enter another? (n or N = no, anything else = yes) 
+Input int #3: Enter another? (n or N = no, anything else = yes) 
+Input int #4: Enter another? (n or N = no, anything else = yes) 
+Input int #5: Enter another? (n or N = no, anything else = yes) 
+Input int #6: Value is odd... add 1 to evenize...
+Enter another? (n or N = no, anything else = yes) 
+Input int #7: Value is odd... add 1 to evenize...
+Enter another? (n or N = no, anything else = yes) 
+Input int #8: Value is odd... add 1 to evenize...
+Enter another? (n or N = no, anything else = yes) 
+Input int #9: Value is odd... add 1 to evenize...
+Enter another? (n or N = no, anything else = yes) 
+Input int #10: Value is odd... add 1 to evenize...
+Max of 10 values entered...
+
+10 value(s) entered: 8  6  4  2  0  2  4  6  8  10
+Min is 0
+Max is 10
+Uno o mas duplicates...
+

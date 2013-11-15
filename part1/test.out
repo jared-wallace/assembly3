@@ -1,0 +1,10 @@
+MARS 4.2  Copyright 2003-2012 Pete Sanderson and Kenneth Vollmar
+
+
+Input int #1: Value is odd... add 1 to evenize...
+Enter another? (n or N = no, anything else = yes) 
+1 value(s) entered: 2
+Min is 2
+Max is 2
+No duplicate...
+

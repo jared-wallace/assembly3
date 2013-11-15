@@ -1,0 +1,20 @@
+MARS 4.2  Copyright 2003-2012 Pete Sanderson and Kenneth Vollmar
+
+
+vals to do? enter an int: enter an int: enter an int: enter an int: initial:
+1 2 3 4 
+flipped:
+4 3 2 1 
+do more? 
+vals to do? 0 is bad, make it 1
+enter an int: initial:
+5 
+flipped:
+5 
+do more? 
+vals to do? 8 is bad, make it 7
+enter an int: enter an int: enter an int: enter an int: enter an int: enter an int: enter an int: initial:
+7 6 5 4 3 2 1 
+flipped:
+1 2 3 4 5 6 7 
+do more? 
