@@ -1,8 +1,8 @@
 ################################################################################
-# Name:    <your name>
-# Class:   CS2318 - <your section>
+# Name:    Jared Wallace
+# Class:   CS2318 - 02
 # Subject: Assignment 3 Part 3
-# Date:    <turn-in date> 
+# Date:    December 5, 2013 
 ################################################################################
 #void PopulateArray1(char reply, int a1[], int* used1Ptr, int cap);
 #int PopulateArray1223(int a1[], int a2[], int a3[], int used1, int* used2Ptr, int* used3Ptr);
@@ -87,7 +87,15 @@ begI_m:
 					addi $a2, $sp, 28
 					jal ShowArrayLabeled
 #                         mean = PopulateArray1223(a1, a2, a3, used1, &used2, &used3);
-					####################(8)####################					
+					####################(8)####################
+					addi $a0, $sp, 192
+					addi $a1, $sp, 240
+					addi $a2, $sp, 288
+					lw $a3, 188($sp)
+					addi $t0, $sp, 184
+					sw $t0, 16($sp)
+					addi $t0, $sp, 180
+					sw $t0, 20($sp)
 					jal PopulateArray1223
 					move $t5, $v0					
 #                         ShowArrayLabeled(a2, used2, commA2Str);
@@ -102,6 +110,16 @@ begI_m:
 					jal ShowArrayLabeled
 #                         ProcArrays(mean, a1, a2, a3, used1, &used2, &used3);
 					####################(10)####################					
+					move $a0, $t5
+					addi $a1, $sp, 192
+					addi $a2, $sp, 240
+					addi $a3, $sp, 288
+					lw $t0, 188($sp)
+					sw $t0, 16($sp)
+					addi $t0, $sp, 184
+					sw $t0, 20($sp)
+					addi $t0, $sp, 180
+					sw $t0, 24($sp)
 					jal ProcArrays
 #                         ShowArrayLabeled(a1, used1, procA1Str);
 					addi $a0, $sp, 192
@@ -301,29 +319,76 @@ PopulateArray1223:
 #                       *hopPtr1,
 #                       *endPtr1;
 					# PROLOG:
-					
+					addiu $sp, $sp, -40
+					sw $ra, 36($sp)
+					sw $fp, 32($sp)
+					addiu $fp, $sp, 40
+					sw $s0, 16($sp)
+					sw $a2, 8($fp)
+					sw $a3, 12($fp)
 					# BODY:
 #                   *used2Ptr = 0;
+					lw $v1, 16($fp)
+					sw $0, 0($v1)
 #                   *used3Ptr = 0;
+					lw $v1, 20($fp)
+					sw $0, 0($v1)
 #                   total = 0;
+					move $t0, $0
 #                   hopPtr1 = a1;
+					move $t1, $a0
 #                   endPtr1 = a1 + used1;
+					sll $v0, $a3, 2
+					add $t9, $v0, $a0
 #                   goto FTest_PA1223;
+					j FTest_PA1223
 begF_PA1223:
 #                      target = *hopPtr1;
+					lw $t0, 0($t1)
 #                      total += target;
+					add $s0, $s0, $t0
 #                      if (target % 2 == 0) goto else_PA1223;
+					andi $v0, $t0, 1
+					beqz $v0, else_PA1223
 begI_PA1223:
 #                         PopulateArray1223AuxO(a3, used3Ptr, target);
+					sw $t1, 24($sp)
+					sw $t9, 28($sp)
+					lw $a2, 8($fp)
+					move $a0, $a2
+					lw $a1, 20($fp)
+					move $a2, $t0
+					jal PopulateArray1223AuxO
+					lw $t1, 24($sp)
+					lw $t9, 28($sp)
 #                      goto endI_PA1223;
+					j endI_PA1223
 else_PA1223:
 #                         PopulateArray1223AuxE(a2, used2Ptr, target);
+					sw $t1, 24($sp)
+					sw $t9, 28($sp)
+					move $a0, $a1
+					lw $a1, 16($fp)
+					move $a2, $t0
+					jal PopulateArray1223AuxE
+					lw $t1, 24($sp)
+					lw $t9, 28($sp)
 endI_PA1223:
 #                   ++hopPtr1;
+					addi $t1, $t1, 4
 FTest_PA1223:
 #                   if (hopPtr1 < endPtr1) goto begF_PA1223;
+					blt $t1, $t9, begF_PA1223
 #                   return total/used1;
+					lw $a3, 12($fp)
+					div $v0, $t0, $a3
 					# EPILOG:
+					lw $s0, 16($sp)
+					lw $fp, 32($sp)
+					lw $ra, 36($sp)
+					addiu $sp, $sp, 40
+					jr $ra  
+					
 #}
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
@@ -346,24 +411,43 @@ PopulateArray1223AuxO:
 					 						# no stack frame needed
 					# BODY:
 #                   hopPtr3 = a3 + *used3Ptr - 1;
+					lw $v1, 0($a1)
+					addi $v1, $v1, -1
+					sll $v1, $v1, 2
+					add $t1, $a0, $v1
 #                   endPtr3 = a3;
+					move $t9, $a0
 #                   goto WTest_PA1223AO;
+					j WTest_PA1223AO
 begW_PA1223AO:
 #                      if (*hopPtr3 <= target) goto else_PA1223AO;
+					lw $v1, 0($t1)
+					ble $v1, $a2, else_PA1223AO
 begI_PA1223AO:
 #                         *(hopPtr3 + 1) = *hopPtr3;
+					lw $v1, 0($t1)
+					sw $v1, 4($t1)
 #                         --hopPtr3;
+					addi $t1, $t1, -4
 #                      goto endI_PA1223AO;
+					j endI_PA1223AO
 else_PA1223AO:
 #                         goto xitW_PA1223AO;
+					j xitW_PA1223AO
 endI_PA1223AO:
 WTest_PA1223AO:
 #                   if (hopPtr3 >= endPtr3) goto begW_PA1223AO;
+					bge $t1, $t9, begW_PA1223AO
 xitW_PA1223AO:
 #                   *(hopPtr3 + 1) = target;
+					sw $a2, 4($t1)
 #                   ++(*used3Ptr);
+					lw $v1, 0($a1)
+					addi $v1, $v1, 1
+					sw $v1, 0($a1)
 					# EPILOG:
 #}
+					jr $ra
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
@@ -384,32 +468,61 @@ PopulateArray1223AuxE:
 #                       *hopPtr21,
 #                       *endPtr2;
 					# PROLOG:
-					
+					addiu $sp, $sp, -32
+					sw $ra, 36($sp)
+					sw $fp, 32($sp)
+					addiu $fp, $sp, 32
+					sw $s0, 0($sp)
 					# BODY:
 #                   hopPtr2 = a2;
+					move $t1, $a0
 #                   endPtr2 = a2 + *used2Ptr;
+					lw $v1, 0($a1)
+					sll $v1, $v1, 2
+					add $t9, $v1, $a0
 #                   goto WTest1_PA1223AE;
+					j WTest1_PA1223AE
 begW1_PA1223AE:
 #                      if (*hopPtr2 < target) goto else_PA1223AE;
+					lw $v1, 0($t1)
+					blt $v1, $a2, else_PA1223AE
 begI_PA1223AE:
 #                         hopPtr21 = endPtr2;
+					move $s0, $t9
 #                         goto WTest2_PA1223AE;
+					j WTest2_PA1223AE
 begW2_PA1223AE:
 #                            *hopPtr21 = *(hopPtr21 - 1);
+					lw $v1, -4($s0)
+					sw $v1, 0($s0)
 #                            --hopPtr21;
+					addi $s0, $s0, -4
 WTest2_PA1223AE:
 #                         if (hopPtr21 > hopPtr2) goto begW2_PA1223AE;
+					bgt $s0, $t1, begW2_PA1223AE
 					
 #                         goto xitW1_PA1223AE;
+					j xitW1_PA1223AE
 else_PA1223AE:
 #                         ++hopPtr2;
+					addi $t1, $t1, 4
 endI_PA1223AE:
 WTest1_PA1223AE:
 #                   if (hopPtr2 < endPtr2) goto begW1_PA1223AE;
+					blt $t1, $t9, begW1_PA1223AE
 xitW1_PA1223AE:
 #                   *hopPtr2 = target;
+					sw $a2, 0($t1)
 #                   ++(*used2Ptr);
+					lw $v1, 0($a1)
+					addi $v1, $v1, 1
+					sw $v1, 0($a1)
 					# EPILOG:
+					lw $ra, 36($sp)
+					lw $fp, 32($sp)
+					lw $s0, 0($sp)
+					addiu $sp, $sp, 32
+					jr $ra
 #}
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
@@ -431,13 +544,29 @@ ProcArrays:
 					addiu $fp, $sp, 40
 					
 					####################(4)####################					
-					
+					sw $a0, 0($fp)
+					sw $a1, 4($fp)
+					sw $a2, 8($fp)
+					sw $a3, 12($fp)
 					# BODY:
 #                   MergeCopy2321(used2Ptr, a1, a2, a3, used3Ptr);
-					####################(3)####################					
+					####################(3)####################	
+					lw $a0, 20($fp)
+					lw $v1, 24($fp)
+					sw $v1, 16($sp)				
 					jal MergeCopy2321
 #                   LtMeanGtMeanCopy1223(mean, a1, a2, a3, used1, used2Ptr, used3Ptr);
 					####################(10)####################					
+					lw $a0, 0($fp)
+					lw $a1, 4($fp)
+					lw $a2, 8($fp)
+					lw $a3, 12($fp)
+					lw $v1, 16($fp)
+					sw $v1, 16($sp)
+					lw $v1, 20($fp)
+					sw $v1, 20($sp)
+					lw $v1, 24($fp)
+					sw $v1, 24($sp)
 					jal LtMeanGtMeanCopy1223
 					# EPILOG:
 					lw $fp, 32($sp)				
@@ -474,43 +603,79 @@ MergeCopy2321:
 					 						# no stack frame needed
 					# BODY:
 #                   hopPtr1 = a1;
+					move $t1, $a1
 #                   hopPtr2 = a2;
+					move $t2, $a2
 #                   hopPtr3 = a3;
+					move $t3, $a3
 #                   endPtr2 = a2 + *used2Ptr;
+					lw $v1, 0($a0)
+					sll $v1, $v1, 2
+					add $t8, $a2, $v1
 #                   endPtr3 = a3 + *used3Ptr;
+					lw $v1, 16($sp)
+					sll $v1, $v1, 2
+					add $t9, $a3, $v1
 #                   goto WTest1_MC2321;
+					j WTest1_MC2321
 begW1_MC2321:
 #                      if (*hopPtr2 >= *hopPtr3) goto else_MC2321;
+					lw $t0, 0($t2)
+					lw $v1, 0($t3)
+					bge $t0, $v1, else_MC2321
 begI_MC2321:
 #                         *hopPtr1 = *hopPtr2;
+					lw $v1, 0($t2)
+					sw $v1, 0($t1)
 #                         ++hopPtr2;
+					addi $t2, $t2, 4
 #                      goto endI_MC2321;
+					j endI_MC2321
 else_MC2321:
 #                         *hopPtr1 = *hopPtr3;
+					lw $v1, 0($t3)
+					sw $v1, 0($t1)
 #                         ++hopPtr3;
+					addi $t3, $t3, 4
 endI_MC2321:
 #                      ++hopPtr1;
+					addi $t1, $t1, 4
 WTest1_MC2321:
 #                   if (hopPtr2 >= endPtr2) goto xitW1_MC2321;
+					bge $t2, $t8, xitW1_MC2321
 #                   if (hopPtr3 < endPtr3) goto begW1_MC2321;
+					blt $t3, $t9, begW1_MC2321
 xitW1_MC2321:
 
 #                   goto WTest2_MC2321;
+					j WTest2_MC2321
 begW2_MC2321:
 #                      *hopPtr1 = *hopPtr2;
+					lw $v1, 0($t2)
+					sw $v1, 0($t1)
 #                      ++hopPtr2;
+					addi $t2, $t2, 4
 #                      ++hopPtr1;
+					addi $t1, $t1, 4
 WTest2_MC2321:
 #                   if (hopPtr2 < endPtr2) goto begW2_MC2321;
+					blt $t2, $t8, begW2_MC2321
 
 #                   goto WTest3_MC2321;
+					j WTest3_MC2321
 begW3_MC2321:
 #                      *hopPtr1 = *hopPtr3;
+					lw $v1, 0($t3)
+					sw $v1, 0($t1)
 #                      ++hopPtr3;
+					addi $t3, $t3, 4
 #                      ++hopPtr1;
+					addi $t1, $t1, 4
 WTest3_MC2321:
 #                   if (hopPtr3 < endPtr3) goto begW3_MC2321;
+					blt $t3, $t9, begW3_MC2321
 #}
+					jr $ra
 
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
@@ -541,32 +706,58 @@ LtMeanGtMeanCopy1223:
 					 						# no stack frame needed
 					# BODY:
 #                   hopPtr1 = a1;
+					move $t1, $a1
 #                   hopPtr2 = a2;
+					move $t2, $a2
 #                   hopPtr3 = a3;
+					move $t3, $a3
 #                   endPtr1 = a1 + used1;
+					lw $v1, 16($sp)
+					sll $v1, $v1, 2
+					add $t9, $a1, $v1
 #                   *used2Ptr = 0;
+					sw $0, 20($sp)
 #                   *used3Ptr = 0;
+					sw $0, 24($sp)
 #                   goto WTest_LMGMC1223;
+					j WTest_LMGMC1223
 begW_LMGMC1223:
 #                      target = *hopPtr1;
+					lw $t5, 0($t1)
 #                      if (target >= mean) goto else1_LMGMC1223;
+					bge $t5, $a0, else1_LMGMC1223
 begI1_LMGMC1223:
 #                         *hopPtr2 = target;
+					sw $t5, 0($t2)
 #                         ++(*used2Ptr);
+					lw $v1, 20($sp)
+					addi $v1, $v1, 1
+					sw $v1, 20($sp)
 #                         ++hopPtr2;
+					addi $t2, $t2, 4
 #                      goto endI1_LMGMC1223;
+					j endI1_LMGMC1223
 else1_LMGMC1223:
 #                         if (target <= mean) goto endI2_LMGMC1223;
+					ble $t5, $a0, endI2_LMGMC1223
 begI2_LMGMC1223:
 #                            *hopPtr3 = target;
+					sw $t5, 0($t3)
 #                            ++(*used3Ptr);
+					lw $v1, 24($sp)
+					addi $v1, $v1, 1
+					sw $v1, 24($sp)
 #                            ++hopPtr3;
+					addi $t3, $t3, 4
 endI2_LMGMC1223:
 endI1_LMGMC1223:
 #                      ++hopPtr1;
+					addi $t1, $t1, 4
 WTest_LMGMC1223:
 #                   if (hopPtr1 < endPtr1) goto begW_LMGMC1223;
+					blt $t1, $t9, begW_LMGMC1223
 #}
+					jr $ra
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
