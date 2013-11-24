@@ -324,6 +324,7 @@ PopulateArray1223:
 					sw $fp, 32($sp)
 					addiu $fp, $sp, 40
 					sw $s0, 16($sp)
+					sw $a1, 4($fp)
 					sw $a2, 8($fp)
 					sw $a3, 12($fp)
 					# BODY:
@@ -367,6 +368,7 @@ else_PA1223:
 #                         PopulateArray1223AuxE(a2, used2Ptr, target);
 					sw $t1, 24($sp)
 					sw $t9, 28($sp)
+					lw $a1, 4($fp)
 					move $a0, $a1
 					lw $a1, 16($fp)
 					move $a2, $t0
@@ -381,7 +383,7 @@ FTest_PA1223:
 					blt $t1, $t9, begF_PA1223
 #                   return total/used1;
 					lw $a3, 12($fp)
-					div $v0, $t0, $a3
+					div $v0, $s0, $a3
 					# EPILOG:
 					lw $s0, 16($sp)
 					lw $fp, 32($sp)
@@ -469,8 +471,8 @@ PopulateArray1223AuxE:
 #                       *endPtr2;
 					# PROLOG:
 					addiu $sp, $sp, -32
-					sw $ra, 36($sp)
-					sw $fp, 32($sp)
+					sw $ra, 28($sp)
+					sw $fp, 24($sp)
 					addiu $fp, $sp, 32
 					sw $s0, 0($sp)
 					# BODY:
@@ -518,8 +520,8 @@ xitW1_PA1223AE:
 					addi $v1, $v1, 1
 					sw $v1, 0($a1)
 					# EPILOG:
-					lw $ra, 36($sp)
-					lw $fp, 32($sp)
+					lw $ra, 28($sp)
+					lw $fp, 24($sp)
 					lw $s0, 0($sp)
 					addiu $sp, $sp, 32
 					jr $ra
@@ -613,7 +615,8 @@ MergeCopy2321:
 					sll $v1, $v1, 2
 					add $t8, $a2, $v1
 #                   endPtr3 = a3 + *used3Ptr;
-					lw $v1, 16($sp)
+					lw $t0, 16($sp)
+					lw $v1, 0($t0)
 					sll $v1, $v1, 2
 					add $t9, $a3, $v1
 #                   goto WTest1_MC2321;
@@ -716,9 +719,11 @@ LtMeanGtMeanCopy1223:
 					sll $v1, $v1, 2
 					add $t9, $a1, $v1
 #                   *used2Ptr = 0;
-					sw $0, 20($sp)
+					lw $v1, 20($sp)
+					sw $0, 0($v1)
 #                   *used3Ptr = 0;
-					sw $0, 24($sp)
+					lw $v1, 24($sp)
+					sw $0, 0($v1)
 #                   goto WTest_LMGMC1223;
 					j WTest_LMGMC1223
 begW_LMGMC1223:
@@ -730,9 +735,10 @@ begI1_LMGMC1223:
 #                         *hopPtr2 = target;
 					sw $t5, 0($t2)
 #                         ++(*used2Ptr);
-					lw $v1, 20($sp)
+					lw $t0, 20($sp)
+					lw $v1, 0($t0)
 					addi $v1, $v1, 1
-					sw $v1, 20($sp)
+					sw $v1, 0($t0)
 #                         ++hopPtr2;
 					addi $t2, $t2, 4
 #                      goto endI1_LMGMC1223;
@@ -744,9 +750,10 @@ begI2_LMGMC1223:
 #                            *hopPtr3 = target;
 					sw $t5, 0($t3)
 #                            ++(*used3Ptr);
-					lw $v1, 24($sp)
+					lw $t0, 24($sp)
+					lw $v1, 0($t0)
 					addi $v1, $v1, 1
-					sw $v1, 24($sp)
+					sw $v1, 0($t0)
 #                            ++hopPtr3;
 					addi $t3, $t3, 4
 endI2_LMGMC1223:
